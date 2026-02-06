@@ -4,7 +4,7 @@
   "metadata": {
     "colab": {
       "provenance": [],
-      "authorship_tag": "ABX9TyPuRY1/brVfO1lbH7S8ERRB",
+      "authorship_tag": "ABX9TyN66aAL5hF0y8m34/mzpmQQ",
       "include_colab_link": true
     },
     "kernelspec": {
@@ -28,81 +28,98 @@
     },
     {
       "cell_type": "code",
-      "execution_count": 2,
+      "execution_count": 3,
       "metadata": {
         "id": "DivNJ91QnYDV",
         "colab": {
           "base_uri": "https://localhost:8080/"
         },
-        "outputId": "d2697fbe-a75f-4d76-9770-ab30cbb3e3f7"
+        "outputId": "1d94d2ca-771f-4cc4-a266-0899969fcb21"
       },
       "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Tokens:\n",
+            "['developers', 'are', 'developing', 'scalable', 'software', 'systems', '.', 'a', 'developer', 'is', 'responsible', 'for', 'application', 'development', '.']\n",
+            "\n",
+            "Porter Stemmer Output:\n",
+            "['develop', 'are', 'develop', 'scalabl', 'softwar', 'system', '.', 'a', 'develop', 'is', 'respons', 'for', 'applic', 'develop', '.']\n",
+            "\n",
+            "Lancaster Stemmer Output:\n",
+            "['develop', 'ar', 'develop', 'scal', 'softw', 'system', '.', 'a', 'develop', 'is', 'respons', 'for', 'apply', 'develop', '.']\n",
+            "\n",
+            "Snowball Stemmer Output:\n",
+            "['develop', 'are', 'develop', 'scalabl', 'softwar', 'system', '.', 'a', 'develop', 'is', 'respons', 'for', 'applic', 'develop', '.']\n",
+            "\n",
+            "Conclusion:\n",
+            "Stemming normalizes text by reducing words to their root form,\n",
+            "improving matching between job descriptions and user queries.\n"
+          ]
+        },
         {
           "output_type": "stream",
           "name": "stderr",
           "text": [
             "[nltk_data] Downloading package punkt to /root/nltk_data...\n",
-            "[nltk_data]   Unzipping tokenizers/punkt.zip.\n",
-            "[nltk_data] Downloading package stopwords to /root/nltk_data...\n",
-            "[nltk_data]   Unzipping corpora/stopwords.zip.\n",
-            "[nltk_data] Downloading package punkt_tab to /root/nltk_data...\n",
-            "[nltk_data]   Unzipping tokenizers/punkt_tab.zip.\n"
-          ]
-        },
-        {
-          "output_type": "stream",
-          "name": "stdout",
-          "text": [
-            "\n",
-            "my name is vikash jha and i am pursuing masters in computer science\n",
-            "\n",
-            "['my', 'name', 'is', 'vikash', 'jha', 'and', 'i', 'am', 'pursuing', 'masters', 'in', 'computer', 'science']\n",
-            "['my', 'name', 'is', 'vikash', 'jha', 'and', 'i', 'am', 'pursuing', 'masters', 'in', 'computer', 'science']\n",
-            "['name', 'vikash', 'jha', 'pursuing', 'masters', 'computer', 'science']\n",
-            "['computer', 'jha', 'masters', 'name', 'pursuing', 'science', 'vikash']\n",
-            "Vocabulary saved to vocabulary.json\n"
+            "[nltk_data]   Package punkt is already up-to-date!\n"
           ]
         }
       ],
       "source": [
+        "# Step 1: Import Required Libraries\n",
         "import nltk\n",
-        "import json\n",
-        "import string\n",
-        "\n",
-        "from nltk.corpus import stopwords\n",
-        "from nltk.tokenize import word_tokenize\n",
-        "\n",
         "nltk.download('punkt')\n",
-        "nltk.download('stopwords')\n",
         "\n",
-        "text = \"\"\"\n",
-        "my name is vikash jha and i am pursuing masters in computer science\n",
+        "from nltk.tokenize import word_tokenize\n",
+        "from nltk.stem import PorterStemmer, LancasterStemmer, SnowballStemmer\n",
+        "\n",
+        "\n",
+        "# Step 2: Define Job Description and User Query Text\n",
+        "job_text = \"\"\"\n",
+        "Developers are developing scalable software systems.\n",
+        "A developer is responsible for application development.\n",
         "\"\"\"\n",
         "\n",
-        "corpus = text.lower()\n",
-        "print(corpus)\n",
         "\n",
-        "nltk.download('punkt_tab')\n",
-        "tokens = word_tokenize(corpus)\n",
+        "# Step 3: Convert Text to Lowercase\n",
+        "job_text = job_text.lower()\n",
+        "\n",
+        "\n",
+        "# Step 4: Tokenize the Text\n",
+        "tokens = word_tokenize(job_text)\n",
+        "print(\"Tokens:\")\n",
         "print(tokens)\n",
         "\n",
-        "tokens = [word for word in tokens if word not in string.punctuation]\n",
-        "print(tokens)\n",
         "\n",
-        "stop_words = set(stopwords.words('english'))\n",
+        "# Step 5: Initialize Stemming Algorithms\n",
+        "porter = PorterStemmer()\n",
+        "lancaster = LancasterStemmer()\n",
+        "snowball = SnowballStemmer(\"english\")\n",
         "\n",
-        "clean_tokens = [word for word in tokens if word not in stop_words]\n",
-        "print(clean_tokens)\n",
         "\n",
-        "vocabulary = sorted(set(clean_tokens))\n",
-        "print(vocabulary)\n",
+        "# Step 6: Apply Stemming on Tokens\n",
+        "porter_stem = [porter.stem(word) for word in tokens]\n",
+        "lancaster_stem = [lancaster.stem(word) for word in tokens]\n",
+        "snowball_stem = [snowball.stem(word) for word in tokens]\n",
         "\n",
-        "vocab_dict = {\"vocabulary\": vocabulary}\n",
         "\n",
-        "with open(\"vocabulary.json\", \"w\") as file:\n",
-        "    json.dump(vocab_dict, file, indent=4)\n",
+        "# Step 7: Display and Compare Results\n",
+        "print(\"\\nPorter Stemmer Output:\")\n",
+        "print(porter_stem)\n",
         "\n",
-        "    print(\"Vocabulary saved to vocabulary.json\")"
+        "print(\"\\nLancaster Stemmer Output:\")\n",
+        "print(lancaster_stem)\n",
+        "\n",
+        "print(\"\\nSnowball Stemmer Output:\")\n",
+        "print(snowball_stem)\n",
+        "\n",
+        "\n",
+        "# Step 8: Conclusion\n",
+        "print(\"\\nConclusion:\")\n",
+        "print(\"Stemming normalizes text by reducing words to their root form,\")\n",
+        "print(\"improving matching between job descriptions and user queries.\")"
       ]
     }
   ]
