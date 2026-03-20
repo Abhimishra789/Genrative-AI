@@ -1,0 +1,59 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": [],
+      "toc_visible": true,
+      "authorship_tag": "ABX9TyORabO4HMSEBs8LmLpwPXN1",
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/Abhimishra789/Genrative-AI/blob/main/exp1\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "Mr8hQOkS8ilI"
+      },
+      "outputs": [],
+      "source": [
+        "import numpy as np\n",
+        "\n",
+        "inputs = np.array([2, 3])\n",
+        "weights = np.array([0.4, 0.6])\n",
+        "bias = 0.2\n",
+        "\n",
+        "z = np.dot(inputs, weights) + bias\n",
+        "\n",
+        "def sigmoid(x):\n",
+        "    return 1 / (1 + np.exp(-x))\n",
+        "    print(\"Inputs:\", inputs)\n",
+        "    print(\"Weights:\", weights)\n",
+        "    print(\"Bias:\", bias)\n",
+        "    print(\"Weighted Sum:\", z)\n",
+        "    print(\"Neuron Output:\", output)\n",
+        "\n",
+        "\n",
+        ""
+      ]
+    }
+  ]
+}
